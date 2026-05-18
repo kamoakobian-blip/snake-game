@@ -3,10 +3,10 @@
 Классическая реализация с использованием Pygame и ООП.
 """
 
-import pygame
 import random
 from typing import List, Tuple
 
+import pygame
 
 # Константы игры
 CELL_SIZE = 20
@@ -30,7 +30,7 @@ RIGHT = (1, 0)
 
 class GameObject:
     """Базовый класс для игровых объектов."""
-    
+
     def __init__(self, position: Tuple[int, int], color: Tuple[int, int, int]):
         self.position = position
         self.body_color = color
@@ -42,7 +42,7 @@ class GameObject:
 
 class Apple(GameObject):
     """Класс яблока."""
-    
+
     def __init__(self):
         super().__init__((0, 0), RED)
         self.randomize_position()
@@ -62,11 +62,11 @@ class Apple(GameObject):
 
 class Snake(GameObject):
     """Класс змейки."""
-    
+
     def __init__(self):
         start_position = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
         super().__init__(start_position, GREEN)
-        
+
         self.positions: List[Tuple[int, int]] = [start_position]
         self.length: int = 1
         self.direction: Tuple[int, int] = RIGHT
@@ -86,13 +86,13 @@ class Snake(GameObject):
         """Перемещает змейку."""
         head_x, head_y = self.get_head_position()
         dir_x, dir_y = self.direction
-        
+
         new_head_x = (head_x + dir_x * CELL_SIZE) % SCREEN_WIDTH
         new_head_y = (head_y + dir_y * CELL_SIZE) % SCREEN_HEIGHT
         new_head = (new_head_x, new_head_y)
-        
+
         self.positions.insert(0, new_head)
-        
+
         if len(self.positions) > self.length:
             self.positions.pop()
 
@@ -145,7 +145,7 @@ def main() -> None:
     """Главный игровой цикл."""
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.display.set_caption("Изгиб Питона — Змейка")
+    pygame.display.set_caption('Изгиб Питона — Змейка')
     clock = pygame.time.Clock()
 
     snake = Snake()
@@ -173,5 +173,5 @@ def main() -> None:
         clock.tick(20)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
