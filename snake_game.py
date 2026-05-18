@@ -1,6 +1,7 @@
 """???? ??????."""
 
 import random
+
 import pygame
 
 CELL_SIZE = 20
@@ -12,7 +13,6 @@ SCREEN_HEIGHT = GRID_HEIGHT * CELL_SIZE
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
-WHITE = (255, 255, 255)
 
 UP = (0, -1)
 DOWN = (0, 1)
@@ -49,8 +49,10 @@ class Apple(GameObject):
 
     def draw(self, surface):
         """????????? ??????."""
-        pygame.draw.rect(surface, self.color,
-                        (self.position[0], self.position[1], CELL_SIZE, CELL_SIZE))
+        pygame.draw.rect(
+            surface, self.color,
+            (self.position[0], self.position[1], CELL_SIZE, CELL_SIZE)
+        )
 
 
 class Snake(GameObject):
@@ -68,16 +70,19 @@ class Snake(GameObject):
     def update_direction(self):
         """?????????? ???????????."""
         opposites = {UP: DOWN, DOWN: UP, LEFT: RIGHT, RIGHT: LEFT}
-        if self.next_direction and self.next_direction != opposites.get(self.direction):
-            self.direction = self.next_direction
+        if self.next_direction:
+            if self.next_direction != opposites.get(self.direction):
+                self.direction = self.next_direction
 
     def move(self):
         """????????."""
         head = self.get_head_position()
         dx = self.direction[0] * CELL_SIZE
         dy = self.direction[1] * CELL_SIZE
-        new_head = ((head[0] + dx) % SCREEN_WIDTH,
-                   (head[1] + dy) % SCREEN_HEIGHT)
+        new_head = (
+            (head[0] + dx) % SCREEN_WIDTH,
+            (head[1] + dy) % SCREEN_HEIGHT
+        )
         self.positions.insert(0, new_head)
         if len(self.positions) > self.length:
             self.positions.pop()
@@ -85,8 +90,10 @@ class Snake(GameObject):
     def draw(self, surface):
         """?????????."""
         for pos in self.positions:
-            pygame.draw.rect(surface, self.color,
-                           (pos[0], pos[1], CELL_SIZE, CELL_SIZE))
+            pygame.draw.rect(
+                surface, self.color,
+                (pos[0], pos[1], CELL_SIZE, CELL_SIZE)
+            )
 
     def get_head_position(self):
         """??????? ??????."""
